@@ -1,0 +1,100 @@
+services:
+  # Redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  # PostgreSQL for Temporal
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=temporal
+      - POSTGRES_PASSWORD=temporal
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Temporal Server
+  temporal:
+    image: temporalio/auto-setup:latest
+    ports:
+      - "7233:7233"
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Temporal UI
+  temporal-ui:
+    image: temporalio/ui:latest
+    ports:
+      - "8233:8080"
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+    depends_on:
+      - temporal
+
+  # API Server
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+      - BASE_URL=http://localhost:3000
+      - REDIS_URL=redis://redis:6379
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_NAMESPACE=default
+      - TEMPORAL_TASK_QUEUE=hotel-offers
+      - SUPPLIER_BASE_URL=http://api:3000
+      - SNAPSHOT_TTL_SECONDS=300
+      - LOG_LEVEL=info
+    depends_on:
+      - redis
+      - temporal
+    profiles:
+      - full
+
+  # Worker
+  worker:
+    build: .
+    command: npm run start:worker
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://redis:6379
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_NAMESPACE=default
+      - TEMPORAL_TASK_QUEUE=hotel-offers
+      - SUPPLIER_BASE_URL=http://api:3000
+      - SNAPSHOT_TTL_SECONDS=300
+      - LOG_LEVEL=info
+    depends_on:
+      - redis
+      - temporal
+    profiles:
+      - full
+
+volumes:
+  redis_data:
+  postgres_data:

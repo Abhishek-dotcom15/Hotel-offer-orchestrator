@@ -1,0 +1,1229 @@
+{
+  "info": {
+    "_postman_id": "e650d935-0b92-4ce4-8d2c-8b8861294aff",
+    "name": "Hotel Offer Orchestrator API",
+    "description": "API for aggregating hotel offers from multiple suppliers",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60317233",
+    "_collection_link": "https://go.postman.co/collection/60317233-e650d935-0b92-4ce4-8d2c-8b8861294aff?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "supplierA",
+      "item": [
+        {
+          "name": "hotels",
+          "item": [
+            {
+              "name": "Get hotels from Supplier A",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/supplierA/hotels?city=delhi",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "supplierA",
+                    "hotels"
+                  ],
+                  "query": [
+                    {
+                      "description": "City name to filter hotels",
+                      "key": "city",
+                      "value": "delhi"
+                    }
+                  ]
+                },
+                "description": "Returns hotels from Supplier A filtered by city.\nSupports simulation via /simulation endpoints for testing.\n"
+              },
+              "response": [
+                {
+                  "name": "List of hotels",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierA/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierA",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Holtin\",\n    \"price\": 6000,\n    \"city\": \"delhi\",\n    \"commissionPct\": 10\n  },\n  {\n    \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Holtin\",\n    \"price\": 6000,\n    \"city\": \"delhi\",\n    \"commissionPct\": 10\n  }\n]"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierA/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierA",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"VALIDATION_ERROR\",\n  \"message\": \"city query parameter is required\"\n}"
+                },
+                {
+                  "name": "Service unavailable (simulated)",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierA/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierA",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            },
+            {
+              "name": "Add a new hotel to Supplier A",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/supplierA/hotels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "supplierA",
+                    "hotels"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Hotel created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierA/hotels",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierA",
+                        "hotels"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Holtin\",\n  \"price\": 6000,\n  \"city\": \"delhi\",\n  \"commissionPct\": 10\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierA/hotels",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierA",
+                        "hotels"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"VALIDATION_ERROR\",\n  \"message\": \"city query parameter is required\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "supplierB",
+      "item": [
+        {
+          "name": "hotels",
+          "item": [
+            {
+              "name": "Get hotels from Supplier B",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/supplierB/hotels?city=delhi",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "supplierB",
+                    "hotels"
+                  ],
+                  "query": [
+                    {
+                      "description": "City name to filter hotels",
+                      "key": "city",
+                      "value": "delhi"
+                    }
+                  ]
+                },
+                "description": "Returns hotels from Supplier B filtered by city.\nSupports simulation via /simulation endpoints for testing.\n"
+              },
+              "response": [
+                {
+                  "name": "List of hotels",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierB/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierB",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Holtin\",\n    \"price\": 6000,\n    \"city\": \"delhi\",\n    \"commissionPct\": 10\n  },\n  {\n    \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"Holtin\",\n    \"price\": 6000,\n    \"city\": \"delhi\",\n    \"commissionPct\": 10\n  }\n]"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierB/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierB",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"VALIDATION_ERROR\",\n  \"message\": \"city query parameter is required\"\n}"
+                },
+                {
+                  "name": "Service unavailable (simulated)",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierB/hotels?city=delhi",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierB",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to filter hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            },
+            {
+              "name": "Add a new hotel to Supplier B",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/supplierB/hotels",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "supplierB",
+                    "hotels"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Hotel created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierB/hotels",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierB",
+                        "hotels"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"hotelId\": \"a-550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Holtin\",\n  \"price\": 6000,\n  \"city\": \"delhi\",\n  \"commissionPct\": 10\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"New Luxury Hotel\",\n  \"price\": 4500,\n  \"city\": \"delhi\",\n  \"commissionPct\": 15\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/supplierB/hotels",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "supplierB",
+                        "hotels"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"VALIDATION_ERROR\",\n  \"message\": \"city query parameter is required\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "simulation",
+      "item": [
+        {
+          "name": "suppliers",
+          "item": [
+            {
+              "name": "{supplier}",
+              "item": [
+                {
+                  "name": "fail",
+                  "item": [
+                    {
+                      "name": "Enable failure simulation for a supplier",
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"mode\": \"down\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/simulation/suppliers/:supplier/fail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "simulation",
+                            "suppliers",
+                            ":supplier",
+                            "fail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "supplier",
+                              "value": "B",
+                              "description": "Supplier to simulate (A or B)"
+                            }
+                          ]
+                        },
+                        "description": "Simulates various failure modes for testing resilience:\n- **down**: Returns 503 immediately\n- **timeout**: Never responds (tests timeout handling)\n- **slow**: Responds after delayMs milliseconds\n- **invalid**: Returns malformed JSON (tests validation)\n\nUse failureRate (0-100) for random failures (chaos testing).\n"
+                      },
+                      "response": [
+                        {
+                          "name": "Simulation enabled",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"mode\": \"down\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/simulation/suppliers/:supplier/fail",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "simulation",
+                                "suppliers",
+                                ":supplier",
+                                "fail"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "supplier",
+                                  "value": "B",
+                                  "description": "Supplier to simulate (A or B)"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"message\": \"string\",\n  \"config\": {}\n}"
+                        },
+                        {
+                          "name": "Invalid request",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"mode\": \"down\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/simulation/suppliers/:supplier/fail",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "simulation",
+                                "suppliers",
+                                ":supplier",
+                                "fail"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "supplier",
+                                  "value": "B",
+                                  "description": "Supplier to simulate (A or B)"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Disable failure simulation for a supplier",
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/simulation/suppliers/:supplier/fail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "simulation",
+                            "suppliers",
+                            ":supplier",
+                            "fail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "supplier",
+                              "value": "B",
+                              "description": "Supplier to reset (A or B)"
+                            }
+                          ]
+                        },
+                        "description": "Removes simulation and restores normal supplier behavior"
+                      },
+                      "response": [
+                        {
+                          "name": "Simulation disabled",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/simulation/suppliers/:supplier/fail",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "simulation",
+                                "suppliers",
+                                ":supplier",
+                                "fail"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "supplier",
+                                  "value": "B",
+                                  "description": "Supplier to reset (A or B)"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"message\": \"string\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "item": [
+            {
+              "name": "Get current simulation status",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/simulation/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "simulation",
+                    "status"
+                  ]
+                },
+                "description": "Shows which suppliers have active simulations"
+              },
+              "response": [
+                {
+                  "name": "Current simulation status",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/simulation/status",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "simulation",
+                        "status"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"active\": false,\n  \"supplierA\": {\n    \"mode\": \"string\",\n    \"delayMs\": 2797.998068516264,\n    \"failureRate\": 717.2689945201738\n  },\n  \"supplierB\": {}\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "reset",
+          "item": [
+            {
+              "name": "Clear all simulations",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/simulation/reset",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "simulation",
+                    "reset"
+                  ]
+                },
+                "description": "Resets all suppliers to normal behavior"
+              },
+              "response": [
+                {
+                  "name": "All simulations cleared",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/simulation/reset",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "simulation",
+                        "reset"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "hotels",
+          "item": [
+            {
+              "name": "Get aggregated hotel offers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=4000&maxPrice=6000",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "hotels"
+                  ],
+                  "query": [
+                    {
+                      "description": "City name to search hotels",
+                      "key": "city",
+                      "value": "delhi"
+                    },
+                    {
+                      "description": "Minimum price filter",
+                      "key": "minPrice",
+                      "value": "4000"
+                    },
+                    {
+                      "description": "Maximum price filter",
+                      "key": "maxPrice",
+                      "value": "6000"
+                    }
+                  ]
+                },
+                "description": "Fetches hotels from both suppliers, deduplicates by name (lowest price wins, then highest commission),\nand filters by price range. Returns data with meta information about source and freshness.\n\n**Resilience Features:**\n- If one supplier fails, returns partial results from the other\n- If both suppliers fail, falls back to cached data\n- Meta field indicates data freshness: live, partial, cached, or stale\n"
+              },
+              "response": [
+                {
+                  "name": "Hotel offers with meta information",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=4000&maxPrice=6000",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to search hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        },
+                        {
+                          "description": "Minimum price filter",
+                          "key": "minPrice",
+                          "value": "4000"
+                        },
+                        {
+                          "description": "Maximum price filter",
+                          "key": "maxPrice",
+                          "value": "6000"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"hotels\": [\n    {\n      \"hotelId\": \"string\",\n      \"name\": \"string\",\n      \"price\": 1942.34856049594,\n      \"city\": \"string\",\n      \"commissionPct\": 1984.5053475136299,\n      \"supplier\": \"A\"\n    },\n    {\n      \"hotelId\": \"string\",\n      \"name\": \"string\",\n      \"price\": 6524.913607801879,\n      \"city\": \"string\",\n      \"commissionPct\": 1901.8890702953395,\n      \"supplier\": \"B\"\n    }\n  ],\n  \"meta\": {\n    \"sources\": {\n      \"supplierA\": \"skipped\",\n      \"supplierB\": \"success\"\n    },\n    \"fromCache\": true,\n    \"cacheAge\": 1172.68558642738,\n    \"warning\": \"string\",\n    \"dataFreshness\": \"live\"\n  }\n}"
+                },
+                {
+                  "name": "Validation error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=4000&maxPrice=6000",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to search hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        },
+                        {
+                          "description": "Minimum price filter",
+                          "key": "minPrice",
+                          "value": "4000"
+                        },
+                        {
+                          "description": "Maximum price filter",
+                          "key": "maxPrice",
+                          "value": "6000"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"VALIDATION_ERROR\",\n  \"message\": \"city query parameter is required\"\n}"
+                },
+                {
+                  "name": "Service unavailable - all suppliers down and no cache",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=4000&maxPrice=6000",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "hotels"
+                      ],
+                      "query": [
+                        {
+                          "description": "City name to search hotels",
+                          "key": "city",
+                          "value": "delhi"
+                        },
+                        {
+                          "description": "Minimum price filter",
+                          "key": "minPrice",
+                          "value": "4000"
+                        },
+                        {
+                          "description": "Maximum price filter",
+                          "key": "maxPrice",
+                          "value": "6000"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"error\": \"SERVICE_UNAVAILABLE\",\n  \"message\": \"All suppliers unavailable and no cached data\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "Health check endpoint",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Check the health status of the API, dependencies (Redis, Temporal), and active simulations"
+          },
+          "response": [
+            {
+              "name": "Service is healthy",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"ok\",\n  \"timestamp\": \"2005-05-21T10:06:41.529Z\",\n  \"services\": {\n    \"redis\": \"connected\",\n    \"temporal\": \"connected\"\n  },\n  \"config\": {\n    \"cacheTTL\": 2721.694025635869,\n    \"temporalTaskQueue\": \"string\"\n  },\n  \"simulation\": {\n    \"active\": true,\n    \"supplierA\": {},\n    \"supplierB\": {}\n  }\n}"
+            },
+            {
+              "name": "Service is unhealthy",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
